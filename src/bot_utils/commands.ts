@@ -3,7 +3,7 @@ export const commands = {
     MIRRORTAR:      'mirrorTar|mt',
     MIRROR:         'mirror|m',
     MIRROR_STATUS:  'mirrorStatus|ms',
-    LIST:           'list|l',
+    LIST:           'glist|l',
     GET_FOLDER:     'getFolder|gf',
     CANCEL_MIRROR:  'cancelMirror|cm',
     CANCEL_ALL:     'cancelAll|ca',
@@ -12,14 +12,14 @@ export const commands = {
     CLONE:          'clone|c',
     ID:             'id',
     MF:             'mf',
-    TAR:            'tar|t',
+    TAR:            'gtar|t',
     UNZIP_MIRROR:   'unzipMirror|um',
     COUT:           'count|cnt',
     HELP:           'help|h',
     AUTHORIZE:      'authorize|a',
     UNAUTHORIZE:    'unauthorize|ua',
-    RESTART:        'restart|r',
-    YTDL:           'ytdl|y'
+    RESTART:        'grestart|r',
+    YTDL:           'gytdl|y'
 };
 
 export const commandsAfter: any = {
