@@ -1,25 +1,25 @@
 export const commands = {
-    START:          'start',
-    MIRRORTAR:      'mirrorTar|mt',
+    START:          'startt',
+    MIRRORTAR:      'mirrorTarr|mt',
     MIRROR:         'mirrorr|m',
-    MIRROR_STATUS:  'mirrorStatus|ms',
-    LIST:           'glist|l',
-    GET_FOLDER:     'getFolder|gf',
-    CANCEL_MIRROR:  'cancelMirror|cm',
-    CANCEL_ALL:     'cancelAll|ca',
+    MIRROR_STATUS:  'mirrorStatuss|ms',
+    LIST:           'listt|l',
+    GET_FOLDER:     'getFolderr|gf',
+    CANCEL_MIRROR:  'cancelMirrorr|cm',
+    CANCEL_ALL:     'cancelAlll|ca',
     STATS:          'statss',
-    GET_LINK:       'getLink|gl',
+    GET_LINK:       'getLinkk|gl',
     CLONE:          'clonee|c',
     ID:             'id',
     MF:             'mf',
-    TAR:            'gtar|t',
+    TAR:            'tar|t',
     UNZIP_MIRROR:   'unzipMirrorr|um',
-    COUT:           'count|cnt',
-    HELP:           'help|h',
-    AUTHORIZE:      'authorize|a',
-    UNAUTHORIZE:    'unauthorize|ua',
-    RESTART:        'grestart|r',
-    YTDL:           'gytdl|y'
+    COUT:           'countt|cnt',
+    HELP:           'helpp|h',
+    AUTHORIZE:      'authorizee|a',
+    UNAUTHORIZE:    'unauthorizee|ua',
+    RESTART:        'restartt|r',
+    YTDL:           'ytdll|y'
 };
 
 export const commandsAfter: any = {
@@ -43,5 +43,5 @@ export const commandsAfter: any = {
     AUTHORIZE:      '$',
     UNAUTHORIZE:    '$',
     RESTART:        '$',
-    YTDL:           '($| (.+))'
+    YTDL:           ' (.+)'
 };

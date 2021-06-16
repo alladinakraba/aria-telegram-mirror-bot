@@ -470,11 +470,13 @@ setEventCallback(eventRegex.commandsRegex.ytdl, eventRegex.commandsRegexNoName.y
 
 async function ytdl(msg: TelegramBot.Message, match: RegExpExecArray) {
   try {
-    let ytdlMsg = await bot.sendMessage(msg.chat.id, `Downloading: <code>` + match[4] + `</code>`, {
+    const inputs = match[4].split(/ (.+)/);
+    let ytdlMsg = await bot.sendMessage(msg.chat.id, `Downloading: <code>` + inputs[0] + `</code>`, {
       reply_to_message_id: msg.message_id,
       parse_mode: 'HTML'
     });
-    await ytdlFn.ytdlWrapper(match[4], bot, ytdlMsg, msg).catch(e => {
+    await ytdlFn.ytdlWrapper(inputs[0], bot, ytdlMsg, msg, inputs.length > 1 ? inputs[1] : '').catch(e => {
+      console.error('Error from ytdlwrapper--->', e);
       msgTools.deleteMsg(bot, ytdlMsg);
       msgTools.sendMessage(bot, msg, e.message || e, 10000);
     });
@@ -557,41 +559,41 @@ setEventCallback(eventRegex.commandsRegex.help, eventRegex.commandsRegexNoName.h
     const text = `
     <b>Command ｜ Description</b>
     ➖➖➖➖➖➖➖➖➖➖➖➖
-    <code>/mirror </code>url or <code>/m </code>url <b>|</b> Download from the given URL and upload it to Google Drive
+    <code>/mirrorr </code>url or <code>/m </code>url <b>|</b> Download from the given URL and upload it to Google Drive
     ➖➖➖➖➖➖➖➖➖➖➖➖
-    <code>/mirrorTar </code>url or <code>/m </code>url <b>|</b> Same as <code>/mirror</code>, but archive multiple files into a tar before uploading it.
+    <code>/mirrorTarr </code>url or <code>/m </code>url <b>|</b> Same as <code>/mirrorr</code>, but archive multiple files into a tar before uploading it.
     ➖➖➖➖➖➖➖➖➖➖➖➖
-    <code>/mirrorStatus</code> or <code>/ms</code> <b>|</b> Send a status message about all active and queued downloads.
+    <code>/mirrorStatuss</code> or <code>/ms</code> <b>|</b> Send a status message about all active and queued downloads.
     ➖➖➖➖➖➖➖➖➖➖➖➖
-    <code>/cancelMirror</code> or <code>/cm</code> or <code>/cancelMirror </code>gid or <code>/cm </code>gid <b>|</b> Cancel a particular mirroring task. Send it as a reply to the message that started the download that you want to cancel or with gid.
+    <code>/cancelMirrorr</code> or <code>/cm</code> or <code>/cancelMirror </code>gid or <code>/cm </code>gid <b>|</b> Cancel a particular mirroring task. Send it as a reply to the message that started the download that you want to cancel or with gid.
     ➖➖➖➖➖➖➖➖➖➖➖➖
-    <code>/cancelAll</code> or <code>/ca</code> <b>|</b> Cancel all mirroring tasks in all chats if a SUDO_USERS member uses it, or cancel all mirroring tasks for a particular chat if one of that chat's admins use it. No one else can use this command.
+    <code>/cancelAlll</code> or <code>/ca</code> <b>|</b> Cancel all mirroring tasks in all chats if a SUDO_USERS member uses it, or cancel all mirroring tasks for a particular chat if one of that chat's admins use it. No one else can use this command.
     ➖➖➖➖➖➖➖➖➖➖➖➖
-    <code>/list </code>filename or <code>/l </code>filename <b>|</b> Send links to downloads with the filename substring in the name. In case of too many downloads, only show the most recent few.
+    <code>/listt </code>filename or <code>/l </code>filename <b>|</b> Send links to downloads with the filename substring in the name. In case of too many downloads, only show the most recent few.
     ➖➖➖➖➖➖➖➖➖➖➖➖
-    <code>/clone </code>driveUrl or <code>/c </code>driveUrl <b>|</b> Clone any shareable drive link.
+    <code>/clonee </code>driveUrl or <code>/c </code>driveUrl <b>|</b> Clone any shareable drive link.
     ➖➖➖➖➖➖➖➖➖➖➖➖
-    <code>/mf</code> or <code>/mirror file</code> <b>|</b> Forward any torrent file and reply to the forwared message with this command it will start mirroring the torrent.
+    <code>/mf</code> or <code>/mirror filee</code> <b>|</b> Forward any torrent file and reply to the forwared message with this command it will start mirroring the torrent.
     ➖➖➖➖➖➖➖➖➖➖➖➖
-    <code>/unzipMirror </code>url or <code>/um </code>url <b>|</b> Unzip the archive and uploads the unzipped folder. Supported filetypes: .zip, .gz, .bz2, .tar, tar.gz, tar.bz2, .tgz, .tbz2
+    <code>/unzipMirrorr </code>url or <code>/um </code>url <b>|</b> Unzip the archive and uploads the unzipped folder. Supported filetypes: .zip, .gz, .bz2, .tar, tar.gz, tar.bz2, .tgz, .tbz2
     ➖➖➖➖➖➖➖➖➖➖➖➖
-    <code>/count </code>driveUrl or <code>/cnt </code>driveUrl <b>|</b> Obtain informations about a drive folder and send it as a table.
+    <code>/countt </code>driveUrl or <code>/cnt </code>driveUrl <b>|</b> Obtain informations about a drive folder and send it as a table.
     ➖➖➖➖➖➖➖➖➖➖➖➖
     <code>/tar </code>driveUrl or <code>/t </code>driveUrl <b>|</b> Create a tar of drive folder and upload to drive.
     ➖➖➖➖➖➖➖➖➖➖➖➖
-    <code>/getlink </code>driveUrl or <code>/gl </code>driveUrl <b>|</b> Get the corresponding index link.
+    <code>/getlinkk </code>driveUrl or <code>/gl </code>driveUrl <b>|</b> Get the corresponding index link.
     ➖➖➖➖➖➖➖➖➖➖➖➖
-    <code>/getfolder</code> or <code>/gf</code> <b>|</b> Send link of drive mirror folder.
+    <code>/getfolderr</code> or <code>/gf</code> <b>|</b> Send link of drive mirror folder.
     ➖➖➖➖➖➖➖➖➖➖➖➖
-    <code>/stats</code> <b>|</b> Send disk information, cpu load of the machine & bot uptime.
+    <code>/statss</code> <b>|</b> Send disk information, cpu load of the machine & bot uptime.
     ➖➖➖➖➖➖➖➖➖➖➖➖
-    <code>/authorize</code> or <code>/a</code> <b>|</b> To authorize a chat, only run by SUDO_USERS.
+    <code>/authorizee</code> or <code>/a</code> <b>|</b> To authorize a chat, only run by SUDO_USERS.
     ➖➖➖➖➖➖➖➖➖➖➖➖
-    <code>/unauthorize</code> or <code>/ua</code> <b>|</b> To Unauthorize a chat, only run by SUDO_USERS.
+    <code>/unauthorizee</code> or <code>/ua</code> <b>|</b> To Unauthorize a chat, only run by SUDO_USERS.
     ➖➖➖➖➖➖➖➖➖➖➖➖
-    <code>/restart</code> or <code>/r</code> <b>|</b> Restart Heroku dyno, only run by SUDO_USERS.
+    <code>/restartt</code> or <code>/r</code> <b>|</b> Restart Heroku dyno, only run by SUDO_USERS.
     ➖➖➖➖➖➖➖➖➖➖➖➖
-    <code>/help</code> or <code>/h</code> <b>|</b> You already know what it does.
+    <code>/helpp</code> or <code>/h</code> <b>|</b> You already know what it does.
     ➖➖➖➖➖➖➖➖➖➖➖➖\n<i>Note: All the above command can also be called using dot(.) instead of slash(/). For e.x: <code>.mirror </code>url or <code>.m </code>url</i>
     `
     msgTools.sendMessage(bot, msg, text, 60000);
@@ -686,10 +688,17 @@ function handleDisallowedFilename(dlDetails: details.DlVars, filename: string): 
   return true;
 }
 
-function prepDownload(msg: TelegramBot.Message, match: string, isTar: boolean, isUnZip: boolean): void {
+export function prepDownload(msg: TelegramBot.Message, match: string, isTar: boolean, isUnZip: boolean, filename = ''): void {
   var dlDir = uuidv4();
-  ariaTools.addUri(match, dlDir, (err, gid) => {
-    dlManager.addDownload(gid, dlDir, msg, isTar, isUnZip);
+  let unzipPassword = '';
+  if (match && isUnZip) {
+    // check for password in case of unzip
+    let tempMatch = match.split(' ').map(str => str.trim());
+    match = tempMatch[0];
+    if (tempMatch.length > 1) unzipPassword = tempMatch[1];
+  }
+  ariaTools.addUri(match, dlDir, filename, (err, gid) => {
+    dlManager.addDownload(gid, dlDir, msg, isTar, isUnZip, unzipPassword);
     if (err) {
       var message = `Failed to start the download. ${err.message}`;
       console.error(message);
@@ -915,7 +924,6 @@ function ariaOnDownloadComplete(gid: string, retry: number): void {
                 filename = extractDetails.filename;
                 size = extractDetails.size; //TODO: To check if size is null
               } catch (error) {
-                console.error(error);
                 cleanupDownload(gid, error.message);
                 return;
               }
