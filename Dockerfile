@@ -12,7 +12,8 @@ RUN apk add --no-cache --update \
       aria2 \
       wget \
       unzip \
-      curl
+      curl \
+      unrar
 # Copy all files from BuildDir to Workdir
 COPY . .
 #Building and Installation
@@ -20,6 +21,7 @@ RUN mv src/.constants.js.example src/.constants.js && \
     npm i -g typescript && \
     yarn && \
     tsc && \
+    rm -rf src/.constants.js && \
     rm -rf out/.constants.js
 
 CMD ["bash", "start.sh"]
